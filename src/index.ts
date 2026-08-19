@@ -77,6 +77,14 @@ async function bootstrap() {
     });
   });
 
+  // ── Root Route ─────────────────────────────────────────────
+  app.get("/", (_req, res) => {
+    res.json({
+      message: "Sunshine CMS API is running.",
+      health: "/health",
+    });
+  });
+
   // ── API Routes ─────────────────────────────────────────────
   app.use("/api/auth", authRoutes);
   app.use("/api/services", servicesRoutes);

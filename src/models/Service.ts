@@ -44,6 +44,5 @@ const ServiceSchema = new Schema<IService>(
 
 // Index for fast public API queries
 ServiceSchema.index({ isPublished: 1, sortOrder: 1 });
-ServiceSchema.index({ slug: 1 });
 
 export const Service = mongoose.model<IService>("Service", ServiceSchema);

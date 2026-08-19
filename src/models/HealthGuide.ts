@@ -74,7 +74,6 @@ HealthGuideSchema.pre("save", function (next) {
 });
 
 HealthGuideSchema.index({ isPublished: 1, publishedAt: -1 });
-HealthGuideSchema.index({ slug: 1 });
 
 export const HealthGuide = mongoose.model<IHealthGuide>(
   "HealthGuide",

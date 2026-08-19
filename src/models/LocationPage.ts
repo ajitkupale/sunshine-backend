@@ -56,7 +56,6 @@ const LocationPageSchema = new Schema<ILocationPage>(
 );
 
 LocationPageSchema.index({ isPublished: 1 });
-LocationPageSchema.index({ slug: 1 });
 
 export const LocationPage = mongoose.model<ILocationPage>(
   "LocationPage",
