@@ -7,11 +7,31 @@ export interface AppError extends Error {
 }
 
 export function errorHandler(
-  err: AppError,
+  err: any,
   _req: Request,
   res: Response,
   _next: NextFunction
 ): void {
+  // Handle Mongoose validation errors
+  if (err.name === 'ValidationError') {
+    const messages = Object.values(err.errors || {}).map((e: any) => e.message).join(', ');
+    res.status(400).json({
+      success: false,
+      message: messages || err.message,
+    });
+    return;
+  }
+
+  // Handle Mongoose duplicate key error (code 11000)
+  if (err.code === 11000) {
+    const field = Object.keys(err.keyValue || {})[0] || 'field';
+    res.status(409).json({
+      success: false,
+      message: `Duplicate ${field}: ${err.keyValue[field]} already exists`,
+    });
+    return;
+  }
+
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
 
